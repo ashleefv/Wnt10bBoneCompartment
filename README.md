@@ -8,7 +8,7 @@ Mathematical modeling of the effects of Wnt-10b on bone metabolism<br/>
 This ODE model describes the effects of Wnt-10b on bone metablolism through mutilple remodeling cycles. The model consists of differential equations that track the active cell populations of osteocytes, pre-osteoblasts, osteoblasts, and osteoclasts. The model also uses a diffential equation to track bone volume chagnes. Wnt-10b is connected to the sytem through a hill function relationship. The model allows for the exploration of the dynamics through various images created by the code.
 
 ## Authors
-Carley V. Cook<sup>a,b</sup>,  Mohammad Aminul Islam<sup>a,b</sup>,  Brenda J. Smith<sup>c</sup>,  Ashlee N. Ford Versypt<sup>a,b,c</sup><br/>
+Carley V. Cook<sup>a,b</sup>,  Mohammad Aminul Islam<sup>a,b</sup>,  Brenda J. Smith<sup>c</sup>,  Ashlee N. Ford Versypt<sup>a,b,d</sup><br/>
 <sup>a</sup>School of Chemical Engineering, Oklahoma State University, Stillwater, OK, USA<br/>
 <sup>b</sup>Department of Chemical and Biological Engineering, University at Buffalo, The State University of New York, Buffalo, NY,USA<br/>
 <sup>c</sup>Department of Nutritional Sciences, Oklahoma State University, Stillwater, OK, USA<br/>
