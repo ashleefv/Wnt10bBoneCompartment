@@ -9,16 +9,17 @@ xdata=[-1, 5, 50]; %Wnt10b Fold Change
 ydata=[-29.7,  69.2, 339]; % Bennet Data normalized BV/TV 
 
 kM=25; %kM for MM with k2 Try 50 or 25
-N=[6,6,12]; %Number of Cylces
-cyclelength=100; %length of cylces
+N=1;%[6,6,12]; %Number of Cycles
+cyclelength=100; %length of cycles
 tlag=14; %DDE lag from osteoblast maturation to activation
-savegraphs=2; %1 for automatically saving graphs
+savegraphs=1; %1 for automatically saving graphs
              %2 for manual saving of graphs
-BVandCells=1;%1 to produce Bone Volume and cells for each graph
+BVandCells=2;%1 to produce Bone Volume and cells for each graph
 Estimationcase=1; %1 to produce estimation cases on same graph
-Validationcase=1; %1 to produce validation case
+Validationcase=2; %1 to produce validation case
 OCWnt=1; %1 to produce cells vs wnt
-barg=1; %1 to produce a bar graph of Wnt fold changes
+Ratio=2;
+barg=2; %1 to produce a bar graph of Wnt fold changes
 %% Fitted parameters
 % % from bioRxiv version 1
 % kg(1)=4.96e-01; %beta1adj
@@ -136,11 +137,17 @@ if BVandCells==1
 end
 %% Graphing of cases used for parameter estimation
 if Estimationcase==1
-    N=[6,6,12]; %Number of Cylces
+    N=[6,6,12]; %Number of Cycles
     [tcalcpt1,ycalcpt1]=Cyclefunction(k,-1,y0,N(1),cyclelength);
     [tcalcpt5,ycalcpt5]=Cyclefunction(k,5,y0,N(2),cyclelength);
     [tcalcpt50,ycalcpt50]=Cyclefunction(k,50,y0,N(3),cyclelength);
+        
+        %Tile the graphs for the paper
         figure(13)
+        set(gcf,'Position',[100 100 985 420])
+        r=tiledlayout(1,2,'TileSpacing','Compact','Padding','Compact');
+        nexttile
+
         plot(tcalcpt1,ycalcpt1(:,5),'g-','Linewidth',2)
         hold on
         plot(tcalcpt5,ycalcpt5(:,5),'b:','Linewidth',2)
@@ -159,7 +166,8 @@ if Estimationcase==1
         xlabel('time(days)','FontSize',12) 
         ylabel('Relative bone volume (%)','FontSize',12)
         xlim([-10 1210])
-        figure(14)
+        title('A')
+        nexttile
         %Reproducing figure 1 from BoneCompartmentUp
          xp = linspace(-1,50,100);
          Np6=zeros(length(xp),1);
@@ -177,12 +185,12 @@ if Estimationcase==1
          ydata2005=339;
          plot(xdata2007,ydata2007,'ko','Linewidth',2)
          plot(xdata2005,ydata2005,'bs','Linewidth',2)
-         legend("Simulation Results 6 Cycles","Simulation Results 12 Cylces","Bennett 2007 Data","Bennett 2005 Data",'Location','Best','FontSize',12)
+         legend("Simulation Results 6 Cycles","Simulation Results 12 Cycles","Bennett 2007 Data","Bennett 2005 Data",'Location','Best','FontSize',12)
         xlabel('Wnt-10b (Fold Change)','FontSize',12) 
         ylabel('BV//TV (% Change from normal Wnt-10b)','FontSize',12)
+        title('B')
     if savegraphs==1
     saveas(figure(13),'EstimationResults','png')
-    saveas(figure(14),'SimulationFit','png')
     end
 end
 
@@ -191,7 +199,7 @@ if Validationcase==1
     [tcalcpt12,ycalcpt12]=Cyclefunction(k,1.8,y0,12,cyclelength);
     [tcalcpt12top,ycalcpt12top]=Cyclefunction(k,2.4,y0,12,cyclelength);
     [tcalcpt12bottom,ycalcpt12bottom]=Cyclefunction(k,1.2,y0,12,cyclelength);
-    figure(15)
+    figure(14)
         plot(tcalcpt12,ycalcpt12(:,5),'Linewidth',2)
         hold on
         errorbar( 600 , 126.6 , 15,'o','Linewidth',2 )
@@ -204,13 +212,15 @@ if Validationcase==1
         ylabel('Relative bone volume (%)','FontSize',12)
         xlim([-10 1210])
     if savegraphs==1
-    saveas(figure(15),'ValidationResults','png')
+    saveas(figure(14),'ValidationResults','png')
     end
 end
 
 %% Graphing important cell population vs Wnt
 if OCWnt==1
     N=1;
+    Gwntdose= [-1 0 1.8 5 25 50];
+    
     [tcalcpt1,ycalcpt1]=Cyclefunction(k,-1,y0,N,...
         cyclelength);
     [tcalcpt0,ycalcpt0]=Cyclefunction(k,0,y0,N,...
@@ -223,31 +233,31 @@ if OCWnt==1
         cyclelength);
     [tcalcpt50,ycalcpt50]=Cyclefunction(k,50,y0,N,...
         cyclelength);
-    Gwntdose= [-1 0 1.8 5 25 50];
-    %Area under pre-ob curve 
-    APO(1)=trapz(tcalcpt1,ycalcpt1(:,2));
-    APO(2)=trapz(tcalcpt0,ycalcpt0(:,2));
-    APO(3)=trapz(tcalcpt18,ycalcpt18(:,2));
-    APO(4)=trapz(tcalcpt5,ycalcpt5(:,2));
-    APO(5)=trapz(tcalcpt25,ycalcpt25(:,2));
-    APO(6)=trapz(tcalcpt50,ycalcpt50(:,2));
-    %Area under osteoblast curve
-    AO(1)=trapz(tcalcpt1,ycalcpt1(:,3));
-    AO(2)=trapz(tcalcpt0,ycalcpt0(:,3));
-    AO(3)=trapz(tcalcpt18,ycalcpt18(:,3));
-    AO(4)=trapz(tcalcpt5,ycalcpt5(:,3));
-    AO(5)=trapz(tcalcpt25,ycalcpt25(:,3));
-    AO(6)=trapz(tcalcpt50,ycalcpt50(:,3));
-    %Area under osteoclast curve
-    AC(1)=trapz(tcalcpt1,ycalcpt1(:,4));
-    AC(2)=trapz(tcalcpt0,ycalcpt0(:,4));
-    AC(3)=trapz(tcalcpt18,ycalcpt18(:,4));
-    AC(4)=trapz(tcalcpt5,ycalcpt5(:,4));
-    AC(5)=trapz(tcalcpt25,ycalcpt25(:,4));
-    AC(6)=trapz(tcalcpt50,ycalcpt50(:,4));
+    
+%     %Area under pre-ob curve 
+%     APO(1)=trapz(tcalcpt1,ycalcpt1(:,2));
+%     APO(2)=trapz(tcalcpt0,ycalcpt0(:,2));
+%     APO(3)=trapz(tcalcpt18,ycalcpt18(:,2));
+%     APO(4)=trapz(tcalcpt5,ycalcpt5(:,2));
+%     APO(5)=trapz(tcalcpt25,ycalcpt25(:,2));
+%     APO(6)=trapz(tcalcpt50,ycalcpt50(:,2));
+%     %Area under osteoblast curve
+%     AO(1)=trapz(tcalcpt1,ycalcpt1(:,3));
+%     AO(2)=trapz(tcalcpt0,ycalcpt0(:,3));
+%     AO(3)=trapz(tcalcpt18,ycalcpt18(:,3));
+%     AO(4)=trapz(tcalcpt5,ycalcpt5(:,3));
+%     AO(5)=trapz(tcalcpt25,ycalcpt25(:,3));
+%     AO(6)=trapz(tcalcpt50,ycalcpt50(:,3));
+%     %Area under osteoclast curve
+%     AC(1)=trapz(tcalcpt1,ycalcpt1(:,4));
+%     AC(2)=trapz(tcalcpt0,ycalcpt0(:,4));
+%     AC(3)=trapz(tcalcpt18,ycalcpt18(:,4));
+%     AC(4)=trapz(tcalcpt5,ycalcpt5(:,4));
+%     AC(5)=trapz(tcalcpt25,ycalcpt25(:,4));
+%     AC(6)=trapz(tcalcpt50,ycalcpt50(:,4));
     
     
-    figure(16)
+    figure(15)
         oc(1)=max(ycalcpt1(:,4));
         oc(2)=max(ycalcpt0(:,4));
         oc(3)=max(ycalcpt18(:,4));
@@ -258,7 +268,7 @@ if OCWnt==1
         xlabel('Wnt-10b (Fold Change)','FontSize',12) 
         ylabel('Osteoclast Cells','FontSize',12)
         xlim([-5 55])
-    figure(17)
+    figure(16)
         PO(1)=max(ycalcpt1(:,2));
         PO(2)=max(ycalcpt0(:,2));
         PO(3)=max(ycalcpt18(:,2));
@@ -269,7 +279,7 @@ if OCWnt==1
         xlabel('Wnt-10b (Fold Change)','FontSize',12) 
         ylabel('Pre-osteoblast Cells','FontSize',12)
         xlim([-5 55])
-    figure(18)
+    figure(17)
         O(1)=max(ycalcpt1(:,3));
         O(2)=max(ycalcpt0(:,3));
         O(3)=max(ycalcpt18(:,3));
@@ -281,9 +291,9 @@ if OCWnt==1
         ylabel('Osteoblast Cells','FontSize',12)
         xlim([-5 55])    
     
-    figure(19)
+    figure(18)
     r2=tiledlayout(2,2,'TileSpacing','Compact');
-    %figure(18)
+    
         nexttile
         plot(tcalcpt1,ycalcpt1(:,1),'Linewidth',2);
         hold on
@@ -299,7 +309,7 @@ if OCWnt==1
         title('A')
         
         nexttile
-    %figure(19)
+    
         plot(tcalcpt1,ycalcpt1(:,2),'Linewidth',2);
         hold on
         plot(tcalcpt0,ycalcpt0(:,2),'Linewidth',2);
@@ -313,7 +323,7 @@ if OCWnt==1
         xlim([-5 105])
         title('B')
         nexttile
-    %figure(20)
+    
         plot(tcalcpt1,ycalcpt1(:,3),'Linewidth',2);
         hold on
         plot(tcalcpt0,ycalcpt0(:,3),'Linewidth',2);
@@ -326,7 +336,7 @@ if OCWnt==1
         legend('-1', '0', '1.8', '5', '25', '50')
         xlim([-5 105])
         title('C')
-    %figure(21)
+    
         nexttile
         plot(tcalcpt1,ycalcpt1(:,4),'Linewidth',2);
         hold on
@@ -341,40 +351,73 @@ if OCWnt==1
         xlim([-5 105])
         title('D')
         xlabel(r2,'time(days)','FontSize',12)
+    
+    if savegraphs==1
+    saveas(figure(15),'OCWnt','png')
+    saveas(figure(16),'POWnt','png')
+    saveas(figure(17),'OWnt','png')
+    saveas(figure(18),'Celldynam','png')
+    end
+end
+
+%% Getting ratios for area under the curve
+if Ratio==1
+    N=1;
+    Gwntdose=linspace(-1,50,100);
+    APO = zeros(size(Gwntdose));
+    AO = zeros(size(Gwntdose));
+    AC = zeros(size(Gwntdose));
+    PO = zeros(size(Gwntdose));
+    O = zeros(size(Gwntdose));
+    % fill in other relevant quantities as needed
+    for i = 1:length(Gwntdose)
+        [tcalcpt,ycalcpt]=Cyclefunction(k,Gwntdose(i),y0,N,...
+        cyclelength);
+        %Area under pre-ob curve 
+        APO(i)=trapz(tcalcpt,ycalcpt(:,2));
+        %Area under osteoblast curve
+        AO(i)=trapz(tcalcpt,ycalcpt(:,3));
+        %Area under osteoclast curve
+        AC(i)=trapz(tcalcpt,ycalcpt(:,4));
+        %Preosteoblast max
+        PO(i)=max(ycalcpt(:,2));
+        %Osteoblast max
+        O(i)=max(ycalcpt(:,3));
+    end
+    
+    figure(19)
+    plot(Gwntdose,PO./O,'Linewidth',2);
+    xlabel('Wnt-10b (Fold Change)','FontSize',12) 
+    ylabel('Pre-Osteoblasts/Osteoblast  Max Cells','FontSize',12)
+    
     figure(20)
-        plot(Gwntdose,PO./O,'b-o','Linewidth',2);
-        xlabel('Wnt-10b (Fold Change)','FontSize',12) 
-        ylabel('Pre-Osteoblasts/Osteoblast  Max Cells','FontSize',12)
-        xlim([-5 55])
-    figure(21)
     r3=tiledlayout(1,2,'TileSpacing','Compact');
     %figure(23)
         nexttile
-        plot(Gwntdose,APO./AO,'b-o','Linewidth',2);
+        plot(Gwntdose,APO./AO,'Linewidth',2);
         %xlabel('Wnt-10b (Fold Change)','FontSize',12) 
         ylabel('Pre-Osteoblasts/Osteoblast AUC','FontSize',12)
         xlim([-5 55])
         title('A')
     %figure(24)
         nexttile
-        plot(Gwntdose,AC./AO,'b-o','Linewidth',2);
+        plot(Gwntdose,AC./AO,'Linewidth',2);
         %xlabel('Wnt-10b (Fold Change)','FontSize',12) 
         ylabel('Osteoclast/Osteoblast AUC','FontSize',12)
         xlim([-5 55])
         title('B')
         xlabel(r3,'Wnt-10b (Fold Change)','FontSize',12)
+        
     if savegraphs==1
-    saveas(figure(16),'OCWnt','png')
-    saveas(figure(17),'POWnt','png')
-    saveas(figure(18),'OWnt','png')
-    saveas(figure(19),'Celldynam','png')
-    saveas(figure(20),'POOBmax','png')
-    saveas(figure(21),'AUC','png')
+    saveas(figure(19),'POOBmax','png')
+    saveas(figure(20),'AUC','png')
     end
+        
 end
 
+%% 
 if barg==1
-    figure(22)
+    figure(21)
         bary=[-1,0,1.8,5,50];
         barx=categorical({'No Wnt-10b','Normal Wnt-10b',...
             'Wnt-10b increase 1','Wnt-10b increase 2',...
@@ -382,7 +425,7 @@ if barg==1
         bar(barx,bary)
         ylabel('Wnt-10b (Fold Change)','FontSize',12)
     if savegraphs==1
-        saveas(figure(22),'BarFold','png')
+        saveas(figure(21),'BarFold','png')
     end
 end
 

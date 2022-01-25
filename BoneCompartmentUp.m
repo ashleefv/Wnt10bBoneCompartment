@@ -12,11 +12,11 @@ ydata=[-29.7,  69.2, 339]; % Bennet Data normalized BV/TV %.339 I ommited one se
 
 ParamY=2;% ParamY=1 for running parameter estimation code
          % ParamY=2 for just graphing
-N=[6,6,12]; %Number of Cylces
-cyclelength=100; %length of cylces
+N=[6,6,12]; %Number of Cycles
+cyclelength=100; %length of cycles
 tlag=14; %DDE lag from osteoblast maturation to activation
-Gwntdose=0; %Dose of wnt that will be graphed
-OCWnt=1; %1 to look at extra graphs
+Gwntdose=50; %Dose of wnt that will be graphed
+OCWnt=2; %1 to look at extra graphs
 %% Guesses for the parameters
 % from bioRxiv version 1
 % Resnorm 1.675805403615064e+02
@@ -138,7 +138,7 @@ figure(1)
 %  ycalcr12 = Graham2013(kr,xp,y0,Np12,cyclelength);
 %  plot(xp,ycalcr12(1,:),'b','Linewidth',2)
 %  end
- legend("Simulation Results 6 Cycles","Simulation Results 12 Cylces","Bennett 2007 Data","Bennett 2005 Data",'Location','Best','FontSize',12)
+ legend("Simulation Results 6 Cycles","Simulation Results 12 Cycles","Bennett 2007 Data","Bennett 2005 Data",'Location','Best','FontSize',12)
 xlabel('Wnt-10b (Fold Change)','FontSize',15) 
 ylabel('BV//TV (% Change from normal Wnt-10b)','FontSize',15)
 
