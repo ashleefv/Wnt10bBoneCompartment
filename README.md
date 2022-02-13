@@ -2,6 +2,7 @@
 Mathematical modeling of the effects of Wnt-10b on bone metabolism<br/>
 [Preprint](https://biorxiv.org/cgi/content/short/2021.06.12.448204v1)
 
+[![DOI](https://zenodo.org/badge/385029851.svg)](https://zenodo.org/badge/latestdoi/385029851)
 
 
 ## Overview
