@@ -42,10 +42,10 @@
       <parameter id="epsilon" name="epsilon" value="1" constant="true"/>
       <parameter id="beta_3" name="beta_3" value="0.1" constant="true"/>
       <parameter id="rho" name="rho" value="20" constant="true"/>
-      <parameter id="mwabdac269_bc11_4988_9729_850a6b9f84c5" name="beta1adj" value="0.215" constant="true"/>
-      <parameter id="mw3bc4a95d_073a_4f14_bdbd_48cc8fd27fc3" name="alpha3adj" value="0.2448" constant="true"/>
-      <parameter id="mw6614bd6c_c5ba_4063_a810_49988556c487" name="beta2adj" value="0.0013" constant="true"/>
-      <parameter id="mwad40f347_abcc_4688_8f9d_e5cda6fc9bc0" name="K" value="8.42" constant="true"/>
+      <parameter id="mwabdac269_bc11_4988_9729_850a6b9f84c5" name="beta1adj" value="0.0833" constant="true"/>
+      <parameter id="mw3bc4a95d_073a_4f14_bdbd_48cc8fd27fc3" name="alpha3adj" value="0.261" constant="true"/>
+      <parameter id="mw6614bd6c_c5ba_4063_a810_49988556c487" name="beta2adj" value="0.00071" constant="true"/>
+      <parameter id="mwad40f347_abcc_4688_8f9d_e5cda6fc9bc0" name="K" value="6.26" constant="true"/>
       <parameter id="mw027deda1_8972_4490_85cd_d5c8291e6751" name="piwnta" value="1" constant="false"/>
       <parameter id="mw29b864e6_e981_4855_b08e_fa813ba6de93" name="Wnt" value="50" constant="true"/>
     </listOfParameters>
