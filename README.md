@@ -1,6 +1,5 @@
 # Wnt10bBoneCompartment
-Mathematical modeling of the effects of Wnt-10b on bone metabolism<br/>
-[Preprint](https://biorxiv.org/cgi/content/short/2021.06.12.448204v1)
+Mathematical modeling of the effects of Wnt-10b on bone metabolism
 
 [![DOI](https://zenodo.org/badge/385029851.svg)](https://zenodo.org/badge/latestdoi/385029851)
 
@@ -14,6 +13,9 @@ Carley V. Cook<sup>a,b</sup>,  Mohammad Aminul Islam<sup>a,b</sup>,  Brenda J. S
 <sup>b</sup>Department of Chemical and Biological Engineering, University at Buffalo, The State University of New York, Buffalo, NY,USA<br/>
 <sup>c</sup>Department of Nutritional Sciences, Oklahoma State University, Stillwater, OK, USA<br/>
 <sup>d</sup>Institute for Computational and Data Sciences, University at Buffalo, The State University of New York, Buffalo, NY, USA<br/>
+
+## Manuscript
+C. V. Cook, M. A. Islam, B. J. Smith, and A. N. Ford Versypt, Mathematical Modeling of the Effects of Wnt-10b on Bone Metabolism, AIChE Journal, 2022, 68(12), e17809. DOI: 10.1002/aic.17809. [Preprint] (https://biorxiv.org/cgi/content/short/2021.06.12.448204v2)
 
 ## Scripts
 
